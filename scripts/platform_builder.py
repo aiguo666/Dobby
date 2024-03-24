@@ -101,26 +101,6 @@ class WindowsPlatformBuilder(PlatformBuilder):
     ]
 
 
-class LinuxPlatformBuilder(PlatformBuilder):
-
-  def __init__(self, project_dir, library_build_type, arch):
-    super().__init__(project_dir, library_build_type, "linux", arch)
-
-    self.shared_output_name = "libdobby.so"
-    self.static_output_name = "libdobby.a"
-
-    targets = {
-      "x86": "i686-linux-gnu",
-      "x86_64": "x86_64-linux-gnu",
-      "arm": "arm-linux-gnueabi",
-      "aarch64": "aarch64-linux-gnu",
-    }
-
-    # self.cmake_args += ["--target={}".format(targets[arch])]
-    self.cmake_args += [
-      "-DCMAKE_SYSTEM_NAME=Linux",
-      "-DCMAKE_SYSTEM_PROCESSOR={}".format(arch),
-    ]
 
 
 class AndroidPlatformBuilder(PlatformBuilder):
