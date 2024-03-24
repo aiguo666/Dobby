@@ -58,7 +58,6 @@ jobs:
     - name: print output
       run: |
         ls -lha .
-
     - name: update release
       uses: ncipollo/release-action@v1
       with:
@@ -102,7 +101,6 @@ jobs:
     - name: print output
       run: |
         ls -lha .
-
     - name: update release
       uses: ncipollo/release-action@v1
       with:
