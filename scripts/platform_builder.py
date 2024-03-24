@@ -211,8 +211,7 @@ if __name__ == "__main__":
       builder = DarwinPlatformBuilder(project_dir, library_build_type, platform, arch_)
     elif platform == "android":
       builder = AndroidPlatformBuilder(args.android_ndk_dir, project_dir, library_build_type, arch_)
-    elif platform == "linux":
-      builder = LinuxPlatformBuilder(project_dir, library_build_type, arch_)
+  
     else:
       logging.error("invalid platform {}".format(platform))
       sys.exit(-1)
