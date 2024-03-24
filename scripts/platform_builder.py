@@ -11,10 +11,8 @@ import argparse
 platforms = {
   "macos": ["x86_64", "arm64", "arm64e"],
   "iphoneos": ["arm64", "arm64e"],
-  "android": ["arm64-v8a"],
-  "linux": ["arm64" ]
-  
-  
+  "linux": ["x86", "x86_64", "arm", "arm64"],
+  "android": ["x86", "x86_64", "armeabi-v7a", "arm64-v8a"]
 }
 
 
@@ -158,11 +156,6 @@ class DarwinPlatformBuilder(PlatformBuilder):
       self.cmake_args += ["-DCMAKE_SYSTEM_NAME=Darwin"]
     elif platform == "iphoneos":
       self.cmake_args += ["-DCMAKE_SYSTEM_NAME=iOS", "-DCMAKE_OSX_DEPLOYMENT_TARGET=9.3"]
-    
-    sdk_name = "macosx" if platform == "macos" else "iphoneos"
-    sdk_path = subprocess.run(f"xcrun --sdk {sdk_name} --show-sdk-path", shell=True, stdout=subprocess.PIPE, check=True)
-    sdk_path = sdk_path.stdout.decode("utf-8").strip()
-    self.cmake_args += [f"-DCMAKE_OSX_SYSROOT={sdk_path}"]
 
     self.shared_output_name = "libdobby.dylib"
     self.static_output_name = "libdobby.a"
