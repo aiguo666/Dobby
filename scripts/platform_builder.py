@@ -11,8 +11,10 @@ import argparse
 platforms = {
   "macos": ["x86_64", "arm64", "arm64e"],
   "iphoneos": ["arm64", "arm64e"],
-  "linux": [ ],
-  "android": ["x86", "x86_64", "armeabi-v7a", "arm64-v8a"]
+  "android": ["arm64-v8a"],
+  "linux": ["arm64" ]
+  
+  
 }
 
 
