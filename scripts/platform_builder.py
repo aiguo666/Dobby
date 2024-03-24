@@ -11,7 +11,8 @@ import argparse
 platforms = {
   "macos": ["x86_64", "arm64", "arm64e"],
   "iphoneos": ["arm64", "arm64e"],
-  "android": ["arm64-v8a"]
+  "linux": [ ],
+  "android": ["x86", "x86_64", "armeabi-v7a", "arm64-v8a"]
 }
 
 
@@ -101,6 +102,26 @@ class WindowsPlatformBuilder(PlatformBuilder):
     ]
 
 
+class LinuxPlatformBuilder(PlatformBuilder):
+
+  def __init__(self, project_dir, library_build_type, arch):
+    super().__init__(project_dir, library_build_type, "linux", arch)
+
+    self.shared_output_name = "libdobby.so"
+    self.static_output_name = "libdobby.a"
+
+    targets = {
+      "x86": "i686-linux-gnu",
+      "x86_64": "x86_64-linux-gnu",
+      "arm": "arm-linux-gnueabi",
+      "aarch64": "aarch64-linux-gnu",
+    }
+
+    # self.cmake_args += ["--target={}".format(targets[arch])]
+    self.cmake_args += [
+      "-DCMAKE_SYSTEM_NAME=Linux",
+      "-DCMAKE_SYSTEM_PROCESSOR={}".format(arch),
+    ]
 
 
 class AndroidPlatformBuilder(PlatformBuilder):
@@ -211,7 +232,8 @@ if __name__ == "__main__":
       builder = DarwinPlatformBuilder(project_dir, library_build_type, platform, arch_)
     elif platform == "android":
       builder = AndroidPlatformBuilder(args.android_ndk_dir, project_dir, library_build_type, arch_)
-  
+    elif platform == "linux":
+      builder = LinuxPlatformBuilder(project_dir, library_build_type, arch_)
     else:
       logging.error("invalid platform {}".format(platform))
       sys.exit(-1)
